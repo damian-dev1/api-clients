@@ -42,7 +42,6 @@ def add_tooltip(w, text, delay=450):
     try: return ToolTip(w, text, delay)
     except: return None
 
-# -------------------- Syntax highlighting --------------------
 def _clear_tags(widget, tags):
     for t in tags:
         try: widget.tag_remove(t, "1.0", "end")
@@ -92,10 +91,9 @@ def highlight_python(widget):
     for m in re.finditer(r'\b(requests|response|resp|headers|params|json|data)\b', text):
         widget.tag_add("py_name", f"1.0+{m.start()}c", f"1.0+{m.end()}c")
 
-# -------------------- App Setup --------------------
 root = tk.Tk()
 root.title("Tokyo Midnight API Client")
-root.geometry("900x760")
+root.geometry("600x760")
 root.resizable(True, True)
 
 style = Style("darkly")
@@ -114,7 +112,6 @@ def _emoji_font():
 ICON_FONT = tkfont.Font(family=_emoji_font(), size=15)
 
 def apply_sidebar_styles():
-    # Reapply custom styles after theme changes so padding/size stays consistent
     style.configure("SidebarIcon.TButton", font=ICON_FONT, padding=(6, 6))
     style.configure("SidebarIconActive.TButton", font=ICON_FONT, padding=(6, 6))
     style.map("SidebarIconActive.TButton",
@@ -123,7 +120,6 @@ def apply_sidebar_styles():
 
 apply_sidebar_styles()
 
-# -------------------- Top Bar --------------------
 root.grid_columnconfigure(0, weight=1)
 top_bar = ttk.Frame(root, padding=(10, 10, 10, 5))
 top_bar.grid(row=0, column=0, sticky="ew")
@@ -145,7 +141,6 @@ add_tooltip(send_button, "Send request (Ctrl+Enter)")
 
 ttk.Separator(root, orient="horizontal").grid(row=1, column=0, sticky="ew")
 
-# -------------------- Main Paned (sidebar ↔ content) --------------------
 main_paned = ttk.PanedWindow(root, orient="horizontal")
 main_paned.grid(row=2, column=0, sticky="nsew")
 root.grid_rowconfigure(2, weight=1)
@@ -155,11 +150,10 @@ right_pane = ttk.Frame(main_paned)
 main_paned.add(left_pane,  weight=0)
 main_paned.add(right_pane, weight=1)
 
-# Sidebar sizing (small like screenshot)
-ICON_BAR_WIDTH = 56          # collapsed width (icon-only)
-EXP_DEFAULT   = 220          # expanded width
+ICON_BAR_WIDTH = 56
+EXP_DEFAULT   = 220
 THRESHOLD     = ICON_BAR_WIDTH + 20
-_sidebar_collapsed = True    # start compact
+_sidebar_collapsed = True
 _last_sidebar_width = EXP_DEFAULT
 
 def _sash():
@@ -202,11 +196,10 @@ def _on_sash_drag(event):
         _set_sidebar_width(pos)
 main_paned.bind("<B1-Motion>", _on_sash_drag)
 
-# -------------------- Left sidebar (buttons) --------------------
 left_pane.grid_rowconfigure(1, weight=1)
 top_btns = ttk.Frame(left_pane, padding=(6,8,6,4)); top_btns.grid(row=0, column=0, sticky="n")
 click_catcher = ttk.Frame(left_pane); click_catcher.grid(row=1, column=0, sticky="nsew")
-click_catcher.bind("<Button-1>", _toggle_sidebar)  # toggle sidebar by clicking empty space
+click_catcher.bind("<Button-1>", _toggle_sidebar)
 bottom_area = ttk.Frame(left_pane, padding=(6,6,6,6)); bottom_area.grid(row=2, column=0, sticky="s")
 
 active_tab = "request"
@@ -242,7 +235,7 @@ _mk_sidebar_btn(bottom_area, "⚙️", "Settings", "settings", "Settings")
 _mk_sidebar_btn(bottom_area, "❓", "Help",    "help",    "Help (opens GitHub page)")
 def _open_help():
     import webbrowser
-    webbrowser.open("https://github.com/damian-dev1/Ecommerce-Manager")
+    webbrowser.open("https://github.com/damian-dev1/api-clients/blob/main/api-client-v1.py")
 sidebar_buttons["help"]['button'].configure(command=_open_help)
 
 right_pane.grid_rowconfigure(0, weight=1)
