@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-# Tokyo Midnight API Client (ttkbootstrap)
-# - Fixes: safe header/param row handling (no TclError on destroyed widgets)
-# - Sidebar toggles by clicking empty space; compact on launch; consistent after theme change
-# - Bottom bar shows color-coded HTTP status
-# - History tab has resizable sash between Saved Requests and Preview
-# - Request code preview generation
-# - Import/Export history collection
-# - Does not store passwords by default
-
 import os, json, time, re, keyword
 import tkinter as tk
 from tkinter import filedialog, simpledialog
@@ -19,7 +9,6 @@ from urllib.parse import parse_qsl
 HISTORY_FILE = "request_history.json"
 request_history = []
 
-# -------------------- Tooltip helper --------------------
 class ToolTip:
     def __init__(self, widget, text: str, delay=500):
         self.widget = widget; self.text = text; self.delay = delay
