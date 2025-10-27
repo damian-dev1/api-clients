@@ -22,9 +22,6 @@ HISTORY_FILE = os.path.join(os.path.expanduser("~"), ".mini_postman_history.json
 SETTINGS_FILE = os.path.join(os.path.expanduser("~"), ".mini_postman_settings.json")
 MAX_HISTORY_ITEMS = 500
 class ThinScrolledText(ttk.Frame):
-    """A ttk.Frame containing a tk.Text and a thin, styled ttk.Scrollbar.
-       Access the underlying Text as .text
-    """
     def __init__(self, master, *, wrap=tk.WORD, font=("Consolas", 10), scrollbar_style="Thin.Vertical.TScrollbar"):
         super().__init__(master)
         self.columnconfigure(0, weight=1)
@@ -802,7 +799,7 @@ class MiniPostman(tk.Tk):
                 pass
     def _flash_feedback(self, success: bool):
         """Overlay a translucent flash (green/red) over the whole window for strong feedback."""
-        color = "#16a34a" if success else "#dc2626"  # green / red
+        color = "#16a34a" if success else "#dc2626"
         overlay = tk.Toplevel(self)
         overlay.overrideredirect(True)
         overlay.attributes("-topmost", True)
